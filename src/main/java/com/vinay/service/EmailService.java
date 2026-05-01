@@ -25,7 +25,7 @@ public class EmailService {
             String subject = "Welcome to Employee Management System";
 
             String verifyUrl =
-                    "http://localhost:8080/api/auth/verify-account?email=" + toEmail;
+                    "http://13.203.79.1:8080/api/auth/verify-account?email=" + toEmail;
 
             String htmlContent =
                     "<div style='font-family: Arial, sans-serif; padding: 20px;'>"
