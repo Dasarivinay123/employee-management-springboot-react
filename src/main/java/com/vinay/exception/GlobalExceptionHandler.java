@@ -20,29 +20,28 @@ public class GlobalExceptionHandler {
             ResourceNotFoundException ex) {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ApiResponse<>(
-                        false,
-                        404,
-                        ex.getMessage(),
-                        null
-                ));
+                .body(new ApiResponse<>(false, 404, ex.getMessage(), null));
     }
 
-    // 400 Duplicate
+    // Duplicate
     @ExceptionHandler(DuplicateResourceException.class)
     public ResponseEntity<ApiResponse<Object>> handleDuplicate(
             DuplicateResourceException ex) {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ApiResponse<>(
-                        false,
-                        400,
-                        ex.getMessage(),
-                        null
-                ));
+                .body(new ApiResponse<>(false, 400, ex.getMessage(), null));
     }
 
-    // Validation Error
+    // Login / Runtime errors
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<Object>> handleRuntime(
+            RuntimeException ex) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(false, 400, ex.getMessage(), null));
+    }
+
+    // Validation
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Object>> handleValidation(
             MethodArgumentNotValidException ex) {
@@ -50,29 +49,18 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>();
 
         ex.getBindingResult().getFieldErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage())
-        );
+                errors.put(error.getField(), error.getDefaultMessage()));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ApiResponse<>(
-                        false,
-                        400,
-                        "Validation failed",
-                        errors
-                ));
+                .body(new ApiResponse<>(false, 400, "Validation failed", errors));
     }
 
-    // 500
+    // Final fallback
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Object>> handleGlobal(
             Exception ex) {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ApiResponse<>(
-                        false,
-                        500,
-                        "Something went wrong",
-                        null
-                ));
+                .body(new ApiResponse<>(false, 500, "Something went wrong", null));
     }
 }

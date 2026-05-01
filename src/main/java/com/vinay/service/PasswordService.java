@@ -48,7 +48,7 @@ public class PasswordService {
 
 		tokenRepo.save(resetToken);
 
-		String resetLink = "http://43.204.68.152:3000/reset-password?token=" + token;
+		String resetLink = "http://43.204.68.152/reset-password?token=" + token;
 
 		emailService.sendResetPasswordEmail(user.getEmail(), user.getName(), resetLink); // OR create new method
 		// Better:
