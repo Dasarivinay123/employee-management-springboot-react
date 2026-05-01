@@ -78,6 +78,6 @@ public class AuthController {
 
         userService.verifyAccount(email);
 
-        response.sendRedirect("http://43.204.68.152:3000/login");
+        response.sendRedirect("http://43.204.68.152/login");
     }
 }
