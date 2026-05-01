@@ -68,7 +68,7 @@ public class WebSecurityConfig {
 
         configuration.setAllowedOrigins(List.of(
             "http://localhost:3000",
-            "http://13.203.79.1"
+            "http://43.204.68.152"
         ));
 
         configuration.setAllowedMethods(List.of(
